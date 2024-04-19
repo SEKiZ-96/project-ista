@@ -14,12 +14,6 @@ return new class extends Migration
         Schema::create('rooms', function (Blueprint $table) {
             $table->id();
             $table->string('room_name');
-            $table->string('monday')->default('null');
-            $table->string('tuesday')->default('null');
-            $table->string('wednesday')->default('null');
-            $table->string('thursday')->default('null');
-            $table->string('friday')->default('null');
-            $table->string('saturday')->default('null');
             $table->timestamps();
         });
     }

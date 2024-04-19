@@ -15,12 +15,6 @@ return new class extends Migration
             $table->id();
             $table->string('group_name');
             $table->timestamps();
-            $table->string('monday')->default('null');
-            $table->string('tuesday')->default('null');
-            $table->string('wednesday')->default('null');
-            $table->string('thursday')->default('null');
-            $table->string('friday')->default('null');
-            $table->string('saturday')->default('null');
         });
     }
 

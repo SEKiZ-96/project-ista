@@ -12,6 +12,7 @@
         "laravel/tinker": "^2.9"
     },
     "require-dev": {
+        "backpack/devtools": "*",
         "backpack/generators": "^4.0",
         "fakerphp/faker": "^1.23",
         "laravel/pint": "^1.13",
@@ -67,5 +68,11 @@
         }
     },
     "minimum-stability": "stable",
-    "prefer-stable": true
+    "prefer-stable": true,
+    "repositories": {
+        "backpack": {
+            "type": "composer",
+            "url": "https://repo.backpackforlaravel.com/"
+        }
+    }
 }
