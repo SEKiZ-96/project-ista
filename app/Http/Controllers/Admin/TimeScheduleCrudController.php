@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Requests\TimeScheduleRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
+use App\Http\Requests\StoreTimeScheduleRequest;
+
 
 /**
  * Class TimeScheduleCrudController
@@ -17,7 +19,7 @@ class TimeScheduleCrudController extends CrudController
     use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
-    use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
+    // use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
     // use \App\Models\Teacher;
 
     /**
@@ -110,16 +112,36 @@ class TimeScheduleCrudController extends CrudController
      * @see https://backpackforlaravel.com/docs/crud-operation-create
      * @return void
      */
+    // CREATE
     protected function setupCreateOperation()
     {
-        // CRUD::setValidation([
-        //     // 'teacher' => 'required',
-        // ]);
-        // CRUD::setValidation(TimeScheduleRequest::class);
-        // CRUD::setFromDb(CRUD::field('Teacher')); // set fields from db columns.
-        CRUD::addField('teacher');
-        CRUD::addField('room');
-        CRUD::addField('group');
+        CRUD::setValidation(StoreTimeScheduleRequest::class);
+        CRUD::addField([
+            'name' => 'teacher', // Column name in 'teachers' table
+            'label' => 'Teacher',
+            'type' => 'select',
+            'entity' => 'teacherr', // Relation method in TimeSchedule model
+            'attribute' => 'teacher_name', // Attribute to display from Teacher model
+            'model' => "App\Models\Teacher"
+        ]);
+
+        CRUD::addField([
+            'name' => 'room', // Column name in 'rooms' table
+            'label' => 'Room',
+            'type' => 'select',
+            'entity' => 'roomm', // Relation method in TimeSchedule model
+            'attribute' => 'room_name', // Attribute to display from Room model
+            'model' => "App\Models\Room"
+        ]);
+
+        CRUD::addField([
+            'name' => 'group', // Column name in 'groups' table
+            'label' => 'Group',
+            'type' => 'select',
+            'entity' => 'groupp', // Relation method in TimeSchedule model
+            'attribute' => 'group_name', // Attribute to display from Group model
+            'model' => "App\Models\Group"
+        ]);
         CRUD::addField([
             'name' => 'day',  // This should be the name of the database column
             'label' => 'Day',  // Label for the dropdown
@@ -162,42 +184,11 @@ class TimeScheduleCrudController extends CrudController
      * @see https://backpackforlaravel.com/docs/crud-operation-update
      * @return void
      */
+
+    // UPDATE
     protected function setupUpdateOperation()
     {
-        // CRUD::setFromDb();
-        // CRUD::addField('teacher');
-        // CRUD::addField('room');
-        // CRUD::addField('group');
-        
-        // $teachers = Teacher::select('teacher_name')->get();
-        CRUD::addField([
-            'name' => 'day',  // This should be the name of the database column
-            'label' => 'Day',  // Label for the dropdown
-            'type' => 'select_from_array',
-            'options' => [
-                'Monday' => 'Monday',
-                'Tuesday' => 'Tuesday',
-                'Wednesday' => 'Wednesday',
-                'Thursday' => 'Thursday',
-                'Friday' => 'Friday',
-                'Saturday' => 'Saturday'
-            ],
-            'allows_null' => false,  // Optional, set to true if a null value is acceptable
-        ]);
-        CRUD::addField([
-            'name' => 'period',  // This should be the name of the database column
-            'label' => 'Period',  // Label for the dropdown
-            'type' => 'select_from_array',
-            'options' => [
-                'M' => '08:30 - 13:30',
-                'M1' => '08:30 - 11:00',
-                'M2' => '11:00 - 13:30',
-                'A' => '13:30 - 18:30',
-                'A1' => '13:30 - 16:00',
-                'A2' => '16:00 - 18:30'
-            ],
-            'allows_null' => false,  // Optional, set to true if a null value is acceptable
-        ]);
+        $this->setupCreateOperation();
     }
     
 }
